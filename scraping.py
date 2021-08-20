@@ -1,6 +1,6 @@
 # Import Splinter, BeautifulSoup, and Pandas
 from splinter import Browser
-from bs4 import BeautifulSoup as soup
+from bs4 import BeautifulSoup as bs
 import pandas as pd
 import datetime as dt
 from webdriver_manager.chrome import ChromeDriverManager
@@ -19,6 +19,7 @@ def scrape_all():
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
+        "hemispheres": mars_hsph(browser),
         "last_modified": dt.datetime.now()
     }
 
@@ -39,7 +40,7 @@ def mars_news(browser):
 
     # Convert the browser html to a soup object and then quit the browser
     html = browser.html
-    news_soup = soup(html, 'html.parser')
+    news_soup = bs(html, 'html.parser')
 
     # Add try/except for error handling
     try:
@@ -66,7 +67,7 @@ def featured_image(browser):
 
     # Parse the resulting html with soup
     html = browser.html
-    img_soup = soup(html, 'html.parser')
+    img_soup = bs(html, 'html.parser')
 
     # Add try/except for error handling
     try:
@@ -97,7 +98,35 @@ def mars_facts():
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html(classes="table table-striped")
 
-if __name__ == "__main__":
 
-    # If running as script, print scraped data
+def mars_hsph(browser):
+
+    url = 'https://marshemispheres.com/'
+    browser.visit(url)
+
+    html = browser.html
+    hsph_list = bs(html, 'html.parser')
+
+    hemisphere_image_urls = []
+
+    items = hsph_list.find_all('div', class_='item')
+    items
+
+    for item in items:
+        url_hr = item.find("a")['href']
+        browser.visit(url+url_hr)
+    
+        hr_item_html = browser.html
+        hr_soup = bs(hr_item_html, 'html.parser')
+    
+        title = hr_soup.find('h2', class_ = 'title').text
+
+        downloads = hr_soup.find('div', class_ = 'downloads')
+        image_url = downloads.find('a')['href']
+
+        hemisphere_image_urls.append({"img url": url+image_url, "title": title, })
+
+    return hemisphere_image_urls
+
+if __name__ == "__main__":
     print(scrape_all())

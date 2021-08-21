@@ -204,25 +204,25 @@ hemisphere_image_urls = []
 # 3. Write code to retrieve the image urls and titles for each hemisphere.
 
 html = browser.html
-hsph_list = bs(html, 'html.parser')
+hmsph_list = bs(html, 'html.parser')
 
-items = hsph_list.find_all('div', class_='item')
-items
+hemisphere_image_urls = []
 
-for item in items:
-    url_hr = item.find("a")['href']
-    browser.visit(url+url_hr)
+hmsphrs = hmsph_list.find_all('div', class_='item')
     
-    hr_item_html = browser.html
-    hr_soup = bs(hr_item_html, 'html.parser')
-    
-    title = hr_soup.find('h2', class_ = 'title').text
-
-    downloads = hr_soup.find('div', class_ = 'downloads')
-    image_url = downloads.find('a')['href']
-    
-    
-    hemisphere_image_urls.append({"img_url": url+image_url, "title": title, })
+for hmsph in hmsphrs:
+    url_hr = hmsph.find("a")['href']
+    browser.visit(url + url_hr)
+    # parse page
+    hmsph_html = browser.html
+    soup = bs(hmsph_html, 'html.parser')
+    # scrape title
+    title = soup.find('h2', class_ = 'title').text
+    # scrape .jpg URL
+    jpg = soup.find('div', class_ = 'downloads')
+    image_url = jpg.find('a')['href']
+    # append to list
+    hemisphere_image_urls.append({"title": title, "img_url": url + image_url })
 
 
 # 4. Print the list that holds the dictionary of each image url and title.

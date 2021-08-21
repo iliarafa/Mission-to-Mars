@@ -19,7 +19,7 @@ def scrape_all():
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
-        "hemispheres": mars_hsph(browser),
+        "hemispheres": mars_hmsph(browser),
         "last_modified": dt.datetime.now()
     }
 
@@ -99,32 +99,32 @@ def mars_facts():
     return df.to_html(classes="table table-striped")
 
 
-def mars_hsph(browser):
-
+def mars_hmsph(browser):
+     # Visit URL
     url = 'https://marshemispheres.com/'
     browser.visit(url)
-
+   
+    # Parse the resulting html with soup
     html = browser.html
-    hsph_list = bs(html, 'html.parser')
+    hmsph_list = bs(html, 'html.parser')
 
     hemisphere_image_urls = []
 
-    items = hsph_list.find_all('div', class_='item')
-    items
-
-    for item in items:
-        url_hr = item.find("a")['href']
-        browser.visit(url+url_hr)
+    hmsphrs = hmsph_list.find_all('div', class_='item')
     
-        hr_item_html = browser.html
-        hr_soup = bs(hr_item_html, 'html.parser')
-    
-        title = hr_soup.find('h2', class_ = 'title').text
-
-        downloads = hr_soup.find('div', class_ = 'downloads')
-        image_url = downloads.find('a')['href']
-
-        hemisphere_image_urls.append({"img url": url+image_url, "title": title, })
+    for hmsph in hmsphrs:
+        url_hr = hmsph.find("a")['href']
+        browser.visit(url + url_hr)
+        # parse page
+        hmsph_html = browser.html
+        soup = bs(hmsph_html, 'html.parser')
+        # scrape title
+        title = soup.find('h2', class_ = 'title').text
+        # scrape .jpg URL
+        jpg = soup.find('div', class_ = 'downloads')
+        image_url = jpg.find('a')['href']
+        # append to list
+        hemisphere_image_urls.append({"title": title, "img_url": url + image_url })
 
     return hemisphere_image_urls
 

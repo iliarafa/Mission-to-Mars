@@ -9,9 +9,9 @@ from splinter import Browser
 from bs4 import BeautifulSoup as bs
 from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
-import requests
-import time 
-import re
+#import requests
+#import time 
+#import re
 
 
 # In[150]:
@@ -222,7 +222,7 @@ for item in items:
     image_url = downloads.find('a')['href']
     
     
-    hemisphere_image_urls.append({"img url": url+image_url, "title": title, })
+    hemisphere_image_urls.append({"img_url": url+image_url, "title": title, })
 
 
 # 4. Print the list that holds the dictionary of each image url and title.
@@ -232,13 +232,6 @@ hemisphere_image_urls
 browser.quit()
 
 
-# In[168]:
-
-
-hemisphere_image_urls
-
-
-# In[ ]:
 
 
 

@@ -1,6 +1,6 @@
 # mission_to.mars
 
-##  * this is a  web-scraping project. 
+###  * this is a  web-scraping project. 
 
 The objective of this project is to build a web application that scrapes data related to planet Mars and displays news, facts and images of each of the red planet's hemispheres in an HTML page. 
 

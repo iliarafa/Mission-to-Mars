@@ -24,8 +24,8 @@
         <div class="col-md-12">
           <div class="media">
             <div class="media-body">
-              <h2>Latest Mars News</h2>
-              <h4 class="media-heading">{{ mars.news_title }}</h4>
+              <h1>Latest marsNews</h1>
+              <h3 class="media-heading">{{ mars.news_title }}</h3>
               <p>{{ mars.news_paragraph }}</p>
             </div>
           </div>
@@ -34,8 +34,8 @@
 
       <!-- Section for Featured Image and Facts table -->
       <div class="row" id="mars-featured-image">
-        <div class="col-md-8">
-          <h2>Featured Mars Image</h2>
+        <div class="col-md-6">
+          <h2>Featured marsImage</h2>
 
           <!-- if images is False/None/non-existent, then default to error message -->
           <img
@@ -45,10 +45,10 @@
           />
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
           <!-- Mars Facts -->
           <div class="row" id="mars-facts">
-            <h4>Mars Facts</h4>
+            <h2>marsFacts</h2>
             {{ mars.facts | safe }}
           </div>
         </div>
